@@ -26,7 +26,7 @@ import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { Sidebar, Navbar } from "./App/Components/index.jsx";
-import { CreateCampaign,Home,CreatePosts ,Profile} from "./App/Pages/index";
+import { CreateCampaign,Home,CreatePosts ,Profile,Connect} from "./App/Pages/index";
 const App = () => {
   return (
     <div className="relative sm:-8 p-4 bg-[#13131a] min-h-screen flex flex-row">
@@ -40,6 +40,8 @@ const App = () => {
         <Route path="/Home" element={<Home />} />
         <Route path="/CreatePosts" element={<CreatePosts />} />
         <Route path="/Profile" element={<Profile />} />
+        <Route path="/Connect" element={<Connect />} />
+
         <Route path="/create-campaign" element={<CreateCampaign />} />
         </Routes>
       </div>

@@ -8,7 +8,13 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState("campaign");
   const [toggleDrawer, setToggleDrawer] = useState(false);
-  const { connect, address } = useState('');
+  const [address, setAddress] = useState(""); 
+  
+  const Connect = () => {
+    // Simulate connecting and setting the address
+    // setAddress("0x123456789..."); 
+    navigate("/Connect");
+  };
 
   return (
     <div className="flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
@@ -35,7 +41,7 @@ const Navbar = () => {
           styles={address ? "bg-[#1dc071]" : "bg-[#8c6dfd]"}
           handleClick={() => {
             if (address) navigate("create-campaign");
-            else connect();
+            else Connect();
           }}
         />
 
@@ -110,7 +116,7 @@ const Navbar = () => {
               styles={address ? "bg-[#1dc071]" : "bg-[#8c6dfd]"}
               handleClick={() => {
                 if (address) navigate("create-campaign");
-                else connect();
+                else Connect();
               }}
             />
           </div>
