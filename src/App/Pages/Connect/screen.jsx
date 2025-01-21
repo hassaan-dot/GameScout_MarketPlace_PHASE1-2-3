@@ -76,7 +76,6 @@ const LoginPage = () => {
 
   const Connect = () => {
     return navigate("/Home");
-  
   };
   const [formData, setFormData] = useState({
     username: "",
@@ -102,10 +101,11 @@ const LoginPage = () => {
       className="flex justify-center items-center h-screen bg-cover bg-center"
       style={{ backgroundImage: `url(${Images.BackgroundLogin})` }}
     >
-      <div className="w-96 md:w-[400px] relative z-10 bg-white/20 shadow-lg rounded-3xl p-8 backdrop-blur-md">
+      <div className="w-96 md:w-[400px] relative z-10 bg-red shadow-lg rounded-3xl p-8 backdrop-blur-md">
         <div className="text-center mb-8">
           <h2 className="text-white text-3xl font-semibold">Login</h2>
         </div>
+
         <form onSubmit={handleSubmit} className="flex flex-col">
           <input
             type="text"
