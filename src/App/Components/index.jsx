@@ -7,3 +7,4 @@ export { default as ContentCard } from './ContentCard/component.jsx';
 export { default as CountBox } from './CountBox/component.jsx';
 export { default as Loader } from './Loader/component.jsx';
 export { default as Navbar } from './NavBar/component.jsx';
+export { default as NavbarButtons } from './navbarButtons/component.jsx';

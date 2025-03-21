@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CustomButton } from "../index";
+import { CustomButton, NavbarButtons } from "../index";
 import { logo, menu, search, thirdweb } from "../../Resources/assets";
 import { navlinks } from "../../Resources/constants";
-
 const Navbar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState("campaign");
   const [toggleDrawer, setToggleDrawer] = useState(false);
-  const [address, setAddress] = useState(""); 
-  
+  const [address, setAddress] = useState("");
+
   const Connect = () => {
-    // Simulate connecting and setting the address
-    // setAddress("0x123456789..."); 
     navigate("/Connect");
   };
 
@@ -33,8 +30,9 @@ const Navbar = () => {
           />
         </div>
       </div>
+      {/* <NavbarButtons></NavbarButtons> */}
 
-      <div className="sm:flex hidden flex-row justify-end gap-4">
+      <div className="sm: flex hidden flex bg-[#000] flex-row justify-end gap-4">
         <CustomButton
           btnType="button"
           title={address ? "Create a campaign" : "Connect"}
@@ -44,7 +42,15 @@ const Navbar = () => {
             else Connect();
           }}
         />
-
+        <CustomButton
+          btnType="button"
+          title={address ? "Create a campaign" : "Connect"}
+          styles={address ? "bg-[#1dc071]" : "bg-[#8c6dfd]"}
+          handleClick={() => {
+            if (address) navigate("create-campaign");
+            else Connect();
+          }}
+        />
         <Link to="/profile">
           <div className="w-[52px] h-[52px] rounded-full bg-[#2c2f32] flex justify-center items-center cursor-pointer">
             <img

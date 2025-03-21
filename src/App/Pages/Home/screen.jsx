@@ -26,7 +26,7 @@ const Home = () => {
         isLoading={isLoading}
         campaigns={campaigns}
       /> */}
-         <div className="flex flex-wrap gap-6 justify-center">
+         <div className="flex flex-wrap gap-6">
         {content.map((product) => (
         <ContentCard content={product}  />
       ))}
