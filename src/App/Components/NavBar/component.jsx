@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CustomButton, LoginButton, NavbarButtons } from "../index";
+import { CustomButton, NavbarButtons } from "../index";
 import { logo, menu, search, thirdweb } from "../../Resources/assets";
 import { navlinks } from "../../Resources/constants";
 const Navbar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState("campaign");
   const [toggleDrawer, setToggleDrawer] = useState(false);
-  const [address, setAddress] = useState("dc kwj");
+  const [address, setAddress] = useState("");
 
   const Connect = () => {
     navigate("/Connect");
@@ -31,6 +31,7 @@ const Navbar = () => {
         </div>
       </div>
       {/* <NavbarButtons></NavbarButtons> */}
+
       <div className="sm: flex hidden flex bg-[#000] flex-row justify-end gap-4">
         <CustomButton
           btnType="button"
@@ -60,6 +61,7 @@ const Navbar = () => {
           </div>
         </Link>
       </div>
+
       {/* Small screen navigation */}
       <div className="sm:hidden flex justify-between items-center relative">
         <div className="w-[40px] h-[40px] rounded-[10px] bg-[#2c2f32] flex justify-center items-center cursor-pointer">
@@ -113,31 +115,18 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {/* 
           <div className="flex mx-4">
             <CustomButton
               btnType="button"
-              title={!address ? "Create a campaign" : "Connect"}
-              styles={!address ? "bg-[#1dc071]" : "bg-[#8c6dfd]"}
+              title={address ? "Create a campaign" : "Connect"}
+              styles={address ? "bg-[#1dc071]" : "bg-[#8c6dfd]"}
               handleClick={() => {
                 if (address) navigate("create-campaign");
                 else Connect();
               }}
             />
-          </div> */}
+          </div>
         </div>
-      </div>
-      <div className="sm:flex hidden flex flex-row">
-        <LoginButton
-          title="SignUp"
-          className="bg-[]"
-          textClassName="text-[white] text-[2] font-bold"
-        />
-        <LoginButton
-          title="Login"
-          className="bg-[#1dc071]"
-          textClassName="text-white text-[3] font-bold"
-        />
       </div>
     </div>
   );
