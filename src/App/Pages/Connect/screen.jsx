@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import { Images } from "../../Resources/Images/index";
-import { useNavigate } from "react-router-dom";
-
+import { useLogin } from "../../../hooks/useLogin";
+import ClipLoader from "react-spinners/ClipLoader";
 const LoginPage = () => {
-  const navigate = useNavigate();
+  const { mutate: handleUserLogin, isPending } = useLogin();
 
-  const Connect = () => {
-    return navigate("/Home");
-  };
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
-    remember: false,
   });
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  const Connect = () => {
+    handleUserLogin({ email: formData?.email, password: formData?.password });
+    // return navigate("/Home");
+  };
+
+  const handleChange = (field, input) => {
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [field]: input,
     }));
   };
 
@@ -39,13 +39,13 @@ const LoginPage = () => {
 
         <form onSubmit={handleSubmit} className="flex flex-col">
           <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
+            type="email"
+            id="email"
+            name="Email"
+            value={formData.email}
+            onChange={(event) => handleChange("email", event.target.value)}
             required
-            placeholder="Username"
+            placeholder="Enter you email"
             className="p-3 mt-4 bg-transparent border border-white text-white rounded-lg placeholder-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
           <input
@@ -53,11 +53,12 @@ const LoginPage = () => {
             id="password"
             name="password"
             value={formData.password}
-            onChange={handleChange}
+            onChange={(event) => handleChange("password", event.target.value)}
             required
             placeholder="Password"
             className="p-3 mt-4 bg-transparent border border-white text-white rounded-lg placeholder-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
+
           <div className="flex items-center mt-6 text-white text-sm">
             <input
               type="checkbox"
@@ -72,13 +73,23 @@ const LoginPage = () => {
               Forgot Password?
             </a>
           </div>
+
           <button
             onClick={() => Connect()}
             type="submit"
-            className="mt-6 bg-[#8C6DFD] text-white py-3 rounded-lg hover:bg-indigo-700 transition-colors"
+            className="mt-6 bg-[#8C6DFD] text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center"
           >
             Login
+            {isPending && (
+              <ClipLoader
+                color="#ffffff"
+                loading={true} // Replace with your loading state
+                size={20}
+                className="inline-block ml-2"
+              />
+            )}
           </button>
+
           <p className="text-sm text-white mt-6">
             Don't have an account?{" "}
             <a
