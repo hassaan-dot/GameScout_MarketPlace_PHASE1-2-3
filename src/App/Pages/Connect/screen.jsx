@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Images } from "../../Resources/Images/index";
-import { useLogin } from "../../../hooks/useLogin";
+import { useLogin, useSignup } from "../../../hooks/useLogin";
+import { useModalStore } from "../../../store/useModalStore";
 import ClipLoader from "react-spinners/ClipLoader";
 const LoginPage = () => {
   const { mutate: handleUserLogin, isPending } = useLogin();
+  const { mutate: handleUserSignUp } = useSignup();
+  const { IsRegister, setIsRegister } = useModalStore();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -11,8 +14,14 @@ const LoginPage = () => {
   });
 
   const Connect = () => {
-    handleUserLogin({ email: formData?.email, password: formData?.password });
-    // return navigate("/Home");
+    if (IsRegister) {
+      handleUserSignUp({
+        email: formData?.email,
+        password: formData?.password,
+      });
+    } else {
+      handleUserLogin({ email: formData?.email, password: formData?.password });
+    }
   };
 
   const handleChange = (field, input) => {
@@ -20,6 +29,10 @@ const LoginPage = () => {
       ...prev,
       [field]: input,
     }));
+  };
+
+  const registerFunction = () => {
+    setIsRegister(true);
   };
 
   const handleSubmit = (e) => {
@@ -34,7 +47,9 @@ const LoginPage = () => {
     >
       <div className="w-96 md:w-[400px] relative z-10 bg-red shadow-lg rounded-3xl p-8 backdrop-blur-md">
         <div className="text-center mb-8">
-          <h2 className="text-white text-3xl font-semibold">Login</h2>
+          <h2 className="text-white text-3xl font-semibold">
+            {IsRegister ? "Sign Up" : "Login"}
+          </h2>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col">
@@ -59,27 +74,29 @@ const LoginPage = () => {
             className="p-3 mt-4 bg-transparent border border-white text-white rounded-lg placeholder-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
 
-          <div className="flex items-center mt-6 text-white text-sm">
-            <input
-              type="checkbox"
-              id="remember"
-              name="remember"
-              checked={formData.remember}
-              onChange={handleChange}
-              className="mr-2"
-            />
-            <label htmlFor="remember">Remember me</label>
-            <a href="#" className="ml-auto text-indigo-300 hover:text-white">
-              Forgot Password?
-            </a>
-          </div>
+          {!IsRegister && (
+            <div className="flex items-center mt-6 text-white text-sm">
+              <input
+                type="checkbox"
+                id="remember"
+                name="remember"
+                checked={formData.remember}
+                onChange={handleChange}
+                className="mr-2"
+              />
+              <label htmlFor="remember">Remember me</label>
+              <a href="#" className="ml-auto text-indigo-300 hover:text-white">
+                Forgot Password?
+              </a>
+            </div>
+          )}
 
           <button
             onClick={() => Connect()}
             type="submit"
             className="mt-6 bg-[#8C6DFD] text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center"
           >
-            Login
+            {IsRegister ? "Sign Up" : "Login"}
             {isPending && (
               <ClipLoader
                 color="#ffffff"
@@ -89,16 +106,18 @@ const LoginPage = () => {
               />
             )}
           </button>
-
-          <p className="text-sm text-white mt-6">
-            Don't have an account?{" "}
-            <a
-              href="#"
-              className="font-semibold underline text-indigo-300 hover:text-white"
-            >
-              Register
-            </a>
-          </p>
+          {!IsRegister && (
+            <p className="text-sm text-white mt-6">
+              Don't have an account?{" "}
+              <button
+                onClick={registerFunction}
+                href="#"
+                className="font-semibold underline text-indigo-300 hover:text-white"
+              >
+                Register
+              </button>
+            </p>
+          )}
         </form>
       </div>
     </div>
