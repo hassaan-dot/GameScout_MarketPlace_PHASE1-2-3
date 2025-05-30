@@ -3,10 +3,16 @@ import { Images } from "../../Resources/Images/index";
 import { useLogin, useSignup } from "../../../hooks/useLogin";
 import { useModalStore } from "../../../store/useModalStore";
 import ClipLoader from "react-spinners/ClipLoader";
+import { FiEye, FiEyeOff, FiMail } from "react-icons/fi"; // Make sure these are imported
+
 const LoginPage = () => {
   const { mutate: handleUserLogin, isPending, isPaused } = useLogin();
+
   const { mutate: handleUserSignUp } = useSignup();
+
   const { IsRegister, setIsRegister } = useModalStore();
+
+  const [showPassword, setShowPassword] = useState(false); // New state to toggle password visibility
 
   const [formData, setFormData] = useState({
     email: "",
@@ -42,7 +48,7 @@ const LoginPage = () => {
 
   return (
     <div
-      className="flex justify-center items-center h-screen bg-cover bg-center"
+      className="flex justify-center items-center min-h-screen w-full bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${Images.BackgroundLogin})` }}
     >
       <div className="w-96 md:w-[400px] relative z-10 bg-red shadow-lg rounded-3xl p-8 backdrop-blur-md">
@@ -53,6 +59,7 @@ const LoginPage = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col">
+          <FiMail className="relative left-3 top-8 transform  text-grey text-lg" />
           <input
             type="email"
             id="email"
@@ -60,19 +67,33 @@ const LoginPage = () => {
             value={formData.email}
             onChange={(event) => handleChange("email", event.target.value)}
             required
-            placeholder="Enter you email"
-            className="p-3 mt-4 bg-transparent border border-white text-white rounded-lg placeholder-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder={
+              IsRegister ? "Enter you new email" : "Enter your email"
+            }
+            className="pl-10 p-3 w-full bg-transparent text-sm border border-white text-white rounded-lg placeholder-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={(event) => handleChange("password", event.target.value)}
-            required
-            placeholder="Password"
-            className="p-3 mt-4 bg-transparent border border-white text-white rounded-lg placeholder-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
+          <div className="relative mt-4">
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-grey z-10"
+            >
+              {showPassword ? <FiEyeOff /> : <FiEye />}
+            </button>
+
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={(event) => handleChange("password", event.target.value)}
+              required
+              placeholder={
+                IsRegister ? "Enter you new Password" : "Enter your Password"
+              }
+              className="pl-10 p-3 w-full text-sm bg-transparent border border-white text-white rounded-lg placeholder-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
 
           {!IsRegister && (
             <div className="flex items-center mt-6 text-white text-sm">
