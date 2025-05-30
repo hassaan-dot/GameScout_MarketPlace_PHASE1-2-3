@@ -4,7 +4,7 @@ import { useLogin, useSignup } from "../../../hooks/useLogin";
 import { useModalStore } from "../../../store/useModalStore";
 import ClipLoader from "react-spinners/ClipLoader";
 const LoginPage = () => {
-  const { mutate: handleUserLogin, isPending } = useLogin();
+  const { mutate: handleUserLogin, isPending, isPaused } = useLogin();
   const { mutate: handleUserSignUp } = useSignup();
   const { IsRegister, setIsRegister } = useModalStore();
 

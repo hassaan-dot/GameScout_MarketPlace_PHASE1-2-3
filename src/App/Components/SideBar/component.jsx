@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { logo, sun } from "../../Resources/assets";
 import { navlinks } from "../../Resources/constants";
+import LocalStorage from "../../../services/local-storage";
+import { useAuthStore } from "../../../store/useAuthStore";
 
 const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
   <div
@@ -26,8 +28,10 @@ const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
 
 const Sidebar = () => {
   const navigate = useNavigate();
+
   const [isActive, setIsActive] = useState("Home");
-  // const [isActive, setIsActive] = useState("");
+
+  const { setToken } = useAuthStore();
 
   return (
     <div className="flex  justify-between items-center bg-[#2c2f32]] flex-col sticky top-5 h-[93vh]">
@@ -49,6 +53,11 @@ const Sidebar = () => {
                   setIsActive(link.name);
                   navigate(link.link);
                 }
+                if (link.name === "logout") {
+                  LocalStorage.remove("token");
+                  LocalStorage.remove("user");
+                  setToken("");
+                }
               }}
             />
           ))}
@@ -56,8 +65,6 @@ const Sidebar = () => {
 
         <Icon styles="bg-[#1c1c24] shadow-secondary" imgUrl={sun} />
       </div>
-      <div></div>
-      {/* <Icon styles="bg-[#1c1c24] shadow-secondary" imgUrl={sun} /> */}
     </div>
   );
 };
