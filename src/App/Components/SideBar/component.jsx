@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { logo, sun } from "../../Resources/assets";
-import { navlinks } from "../../Resources/constants";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import LocalStorage from "../../../services/local-storage";
 import { useAuthStore } from "../../../store/useAuthStore";
+import { logo, sun } from "../../Resources/assets";
+import { navlinks } from "../../Resources/constants";
 
 const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
   <div
@@ -33,6 +34,8 @@ const Sidebar = () => {
 
   const { setToken } = useAuthStore();
 
+  const notify = (message) => toast(message);
+
   return (
     <div className="flex  justify-between items-center bg-[#2c2f32]] flex-col sticky top-5 h-[93vh]">
       <div>
@@ -57,6 +60,7 @@ const Sidebar = () => {
                   LocalStorage.remove("token");
                   LocalStorage.remove("user");
                   setToken("");
+                  notify("SignOut Successfully");
                 }
               }}
             />
